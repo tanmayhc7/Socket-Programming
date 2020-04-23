@@ -6,9 +6,9 @@ htons(): converts the unsigned short integer hostshort from host byte order to n
 ```
 
 ## Basic Server Workflow 
-**socket[]->bind[]->listen[]->accept[]**
+**socket[ ]->bind[ ]->listen[ ]->accept[ ]**
 
 ## Basic Client Workflow: 
-**socket[]->connect[]->recv[]**
+**socket[ ]->connect[ ]->recv[ ]**
 
 
