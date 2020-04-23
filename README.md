@@ -5,10 +5,10 @@
 htons(): converts the unsigned short integer hostshort from host byte order to network byte order. 
 ```
 
-##Basic Server Workflow 
+## Basic Server Workflow 
 **socket[]->bind[]->listen[]->accept[]**
 
-##Basic Client Workflow: 
+## Basic Client Workflow: 
 **socket[]->connect[]->recv[]**
 
 
