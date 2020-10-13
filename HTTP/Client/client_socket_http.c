@@ -10,12 +10,12 @@
 #include <arpa/inet.h>
 
 //standard HTTP port
-#define SERVER_PORT 80
+#define SERVER_PORT 18000
 
 int main(int argc,char *argv[]){
 	
-	if(argc<2){
-		printf("Send server address..\n");//Use ping command to get the ip of any website
+	if(argc<3){
+		printf("USAGE:  <server_ip> <server_port>\n");//Use ping command to get the ip of any website
 		return 0;
 	}
 	//Create a socket
@@ -38,14 +38,17 @@ int main(int argc,char *argv[]){
 	remote_addr.sin_family = AF_INET;
 
 	//htons = host to network short ; converts byte order as per the network requires(Lil or big endien)
-	remote_addr.sin_port=htons(SERVER_PORT);
+	remote_addr.sin_port=htons(atoi(argv[2]));
+	
+	//The inet_addr() function shall convert the string pointed to by cp, in the standard IPv4 dotted decimal notation, to an integer value suitable for use as an Internet address.	
+	remote_addr.sin_addr.s_addr = inet_addr(argv[1]);
 
 	//inet_pton - convert IPv4 and IPv6 addresses from text to binary form
-	if( (inet_pton(AF_INET, argv[1], &remote_addr.sin_addr)) <=0){
+/*	if( (inet_pton(AF_INET, argv[1], &remote_addr.sin_addr)) <=0){
 		printf("inet error...\n");
 		return 0;
 	}
-	
+*/	
 	
 	if(0 == connect(client_socket, (struct sockaddr *)&remote_addr, sizeof(remote_addr))){
 		printf("Connected\n");
@@ -58,8 +61,6 @@ int main(int argc,char *argv[]){
 	//GET command to get a page ; '/' to get root home page ; HTTP version 1.1; end of request(\r\n\r\n)
 	char request[]="GET / HTTP/1.1 \r\n\r\n";
 	char server_response[8192];
-
-//	send(client_socket,request,sizeof(request),0);
 	
 	if( write(client_socket, request, strlen(request)) != strlen(request)){
 		printf("Write Error...\n");
